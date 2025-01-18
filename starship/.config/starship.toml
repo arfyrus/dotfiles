@@ -5,6 +5,10 @@ $git_status\
 $line_break\
 $character"""
 
+[cmd_duration]
+min_time = 500
+format = '[$duration](gray)'
+
 # [character]
 # success_symbol = "[>](bold green)"
 # error_symbol = "[x](bold red)"

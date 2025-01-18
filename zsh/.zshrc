@@ -56,7 +56,7 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
-l() { exa -l -a "$@" }
+l() { eza -l -a "$@" }
 
 # Shell integrations
 eval "$(fzf --zsh)"
