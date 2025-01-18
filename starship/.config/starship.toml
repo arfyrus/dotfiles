@@ -9,6 +9,11 @@ $character"""
 min_time = 500
 format = '[$duration](gray)'
 
+[git_branch]
+symbol = ''
+
+[git_status]
+style = 'bold green'
 # [character]
 # success_symbol = "[>](bold green)"
 # error_symbol = "[x](bold red)"
