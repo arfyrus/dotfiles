@@ -21,6 +21,6 @@ Source packages:
 ```bash
 source ~/.zshrc
 source ~/.vimrc
-bat build --cache
+bat cache --build
 tmux source ~/.config/tmux/tmux.conf
 ```
