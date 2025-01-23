@@ -4,4 +4,5 @@
  	name = Arif Hafeez
 	email = arif.hafeez@icloud.com
 [core]
-    editor = vim
+	autocrlf = input
+	editor = nvim
