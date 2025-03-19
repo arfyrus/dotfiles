@@ -14,6 +14,11 @@ symbol = ''
 
 [git_status]
 style = 'bold green'
+ahead = '↑'
+behind = '↓'
+deleted = '×'
+diverged = '↕'
+conflicted = '↔'
 # [character]
 # success_symbol = "[>](bold green)"
 # error_symbol = "[x](bold red)"
