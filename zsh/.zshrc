@@ -71,3 +71,5 @@ function y() {
 	fi
 	rm -f -- "$tmp"
 }
+
+eval $(thefuck --alias)
