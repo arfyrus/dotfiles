@@ -57,6 +57,8 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
 l() { eza -al --git --git-ignore "$@" }
+py() { python3.13 "$@" }
+alias bat="bat --theme=ansi"
 
 # Shell integrations
 eval "$(fzf --zsh)"

@@ -1,29 +1,37 @@
-format = """
-$directory\
-$git_branch\
-$git_status\
-$line_break\
-$character"""
+# format = """
+# $directory\
+# $git_branch\
+# $git_status\
+# $line_break\
+# $character"""
+
+format = '$character$directory$git_branch$git_status'
 
 [cmd_duration]
 min_time = 500
 format = '[$duration](gray)'
 
+[directory]
+truncation_length = 1
+
 [git_branch]
+format = 'git:\([$branch]($style)\) '
 symbol = ''
 
 [git_status]
+format = '([$all_status$ahead_behind]($style) )'
 style = 'bold green'
 ahead = '↑'
 behind = '↓'
 deleted = '×'
 diverged = '↕'
 conflicted = '↔'
-# [character]
-# success_symbol = "[>](bold green)"
-# error_symbol = "[x](bold red)"
-# vimcmd_symbol = "[<](bold green)"
-# 
+
+[character]
+success_symbol = "[→](bold green)"
+error_symbol = "[×](bold red)"
+vimcmd_symbol = "[←](bold green)"
+
 # [git_commit]
 # tag_symbol = " tag "
 # 
