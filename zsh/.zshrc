@@ -50,15 +50,10 @@ setopt hist_find_no_dups
 
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
+zstyle ':fzf-tab:*' fzf-command 'fzf --no-color'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
-
-# Aliases
-l() { eza -al --git --git-ignore "$@" }
-py() { python3.13 "$@" }
-bt() { bat --theme=ansi "$@" }
 
 # Shell integrations
 eval "$(fzf --zsh)"
@@ -74,4 +69,9 @@ function y() {
 	rm -f -- "$tmp"
 }
 
-eval $(thefuck --alias)
+# Aliases
+l() {
+  eza -al --git --git-ignore "$@"
+}
+
+# eval $(thefuck --alias)
