@@ -1,5 +1,19 @@
 # Dotfiles
 
+## Dependencies
+
+### CLI
+- bat
+- gcc
+- git
+- eza
+- neovim
+- stow
+
+### Fonts
+- Berkeley Mono
+- Jetbrains Mono
+
 ## Installation
 
 Clone the repo:
