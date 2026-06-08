@@ -1,3 +1,7 @@
+# Configs
+export VISUAL="nvim"
+export EDITOR="nvim"
+
 if [[ -f "/opt/homebrew/bin/brew" ]] then
   # If you're using macOS, you'll want this enabled
   eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -75,3 +79,8 @@ l() {
 }
 
 # eval $(thefuck --alias)
+
+# Open buffer in line editor
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^e' edit-command-line
