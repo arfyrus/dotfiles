@@ -1,6 +1,7 @@
 # Configs
 export VISUAL="nvim"
 export EDITOR="nvim"
+export FZF_DEFAULT_OPTS='--no-color'
 
 if [[ -f "/opt/homebrew/bin/brew" ]] then
   # If you're using macOS, you'll want this enabled
@@ -55,7 +56,7 @@ setopt hist_find_no_dups
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' menu no
-zstyle ':fzf-tab:*' fzf-command 'fzf --no-color'
+zstyle ':fzf-tab:*' fzf-flags --no-color
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
@@ -84,3 +85,4 @@ l() {
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^e' edit-command-line
+export PATH="$HOME/.local/bin:$PATH"
