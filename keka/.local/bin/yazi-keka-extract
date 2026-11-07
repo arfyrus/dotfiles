@@ -1,0 +1,55 @@
+#!/bin/bash
+
+KEKA="/Applications/Keka.app/Contents/MacOS/Keka"
+
+if [[ $# -eq 0 ]]; then
+    exit 1
+fi
+
+for item in "$@"; do
+    case "$item" in
+        /*) archive="$item" ;;
+        *)  archive="$PWD/$item" ;;
+    esac
+
+    if [[ ! -f "$archive" ]]; then
+        echo "Archive not found: $archive"
+        continue
+    fi
+
+    dir=$(cd "$(dirname "$archive")" && pwd -P)
+    base=$(basename "$archive")
+
+    # Handle common compound archive extensions.
+    case "$base" in
+        *.tar.gz)  name="${base%.tar.gz}" ;;
+        *.tar.bz2) name="${base%.tar.bz2}" ;;
+        *.tar.xz)  name="${base%.tar.xz}" ;;
+        *.tar.zst) name="${base%.tar.zst}" ;;
+        *.tgz)     name="${base%.tgz}" ;;
+        *.tbz2)    name="${base%.tbz2}" ;;
+        *.txz)     name="${base%.txz}" ;;
+        *)         name="${base%.*}" ;;
+    esac
+
+    [[ -z "$name" ]] && name="$base"
+
+    dest="$dir/$name"
+
+    if [[ -e "$dest" ]]; then
+        echo "Destination already exists: $dest"
+        continue
+    fi
+
+    if ! mkdir "$dest"; then
+        echo "Could not create: $dest"
+        continue
+    fi
+
+    if "$KEKA" --cli 7zz x "$archive" "-o$dest" -y; then
+        rm -f "$archive"
+        echo "Extracted: $base"
+    else
+        echo "Extraction failed. Archive preserved: $base"
+    fi
+done

@@ -1,0 +1,80 @@
+#!/bin/bash
+
+KEKA="/Applications/Keka.app/Contents/MacOS/Keka"
+
+if [[ $# -eq 0 ]]; then
+    exit 1
+fi
+
+paths=()
+names=()
+parent=""
+
+# Resolve selected paths and ensure they share a parent.
+for item in "$@"; do
+    case "$item" in
+        /*) path="$item" ;;
+        *)  path="$PWD/$item" ;;
+    esac
+
+    if [[ ! -e "$path" && ! -L "$path" ]]; then
+        echo "File not found: $path"
+        exit 1
+    fi
+
+    item_parent=$(cd "$(dirname "$path")" && pwd -P) || exit 1
+    base=$(basename "$path")
+
+    if [[ -z "$parent" ]]; then
+        parent="$item_parent"
+    elif [[ "$parent" != "$item_parent" ]]; then
+        echo "Selected files must share the same directory."
+        exit 1
+    fi
+
+    paths+=("$path")
+    names+=("$base")
+done
+
+# Determine archive name.
+if [[ ${#paths[@]} -eq 1 ]]; then
+    base="${names[0]}"
+
+    if [[ -d "${paths[0]}" && ! -L "${paths[0]}" ]]; then
+        archive_name="$base"
+    else
+        archive_name="${base%.*}"
+        [[ -z "$archive_name" ]] && archive_name="$base"
+    fi
+else
+    archive_name=$(basename "$parent")
+fi
+
+archive="$parent/$archive_name.zip"
+
+# Never overwrite an existing archive.
+if [[ -e "$archive" ]]; then
+    echo "Archive already exists: $archive"
+    exit 1
+fi
+
+# Compress and verify.
+if ! (
+    cd "$parent" &&
+    "$KEKA" --cli 7zz a -tzip "$archive" "${names[@]}" &&
+    "$KEKA" --cli 7zz t "$archive"
+); then
+    echo "Compression failed. Originals preserved."
+    exit 1
+fi
+
+# Delete originals only after successful verification.
+for path in "${paths[@]}"; do
+    if [[ -d "$path" && ! -L "$path" ]]; then
+        rm -rf "$path"
+    else
+        rm -f "$path"
+    fi
+done
+
+echo "Created: $archive"
