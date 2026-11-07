@@ -1,0 +1,9 @@
+[[mgr.prepend_keymap]]
+on = [ "c", "z" ]
+run = '''shell -- "$HOME/.local/bin/yazi-keka-zip" %s'''
+desc = "Compress with Keka"
+
+[[mgr.prepend_keymap]]
+on = [ "c", "x" ]
+run = '''shell -- "$HOME/.local/bin/yazi-keka-extract" %s'''
+desc = "Extract with Keka"
