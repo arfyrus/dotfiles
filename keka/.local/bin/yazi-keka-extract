@@ -41,6 +41,45 @@ for item in "$@"; do
         continue
     fi
 
+    # Inspect archive contents to detect a matching top-level folder.
+    listing=$("$KEKA" --cli 7zz l -slt "$archive") || {
+        echo "Could not inspect archive: $base"
+            continue
+    }
+
+if printf '%s\n' "$listing" | awk -v root="$name" '
+    /^Path = / {
+        path = substr($0, 8)
+
+        if (!seen) {
+            seen = 1
+            next
+        }
+
+    if (path == root) next
+
+        if (index(path, root "/") == 1) {
+            child = 1
+            next
+        }
+
+    bad = 1
+    }
+
+END {
+    exit !(child && !bad)
+}
+'; then
+# Archive already contains its own parent folder.
+if "$KEKA" --cli 7zz x "$archive" "-o$dir" -y; then
+    rm -f "$archive"
+    echo "Extracted: $base"
+else
+    echo "Extraction failed. Archive preserved: $base"
+    [[ -e "$dest" ]] && rm -rf "$dest"
+fi
+else
+    # Ordinary archive: extract into a dedicated directory.
     if ! mkdir "$dest"; then
         echo "Could not create: $dest"
         continue
@@ -51,5 +90,7 @@ for item in "$@"; do
         echo "Extracted: $base"
     else
         echo "Extraction failed. Archive preserved: $base"
+        rm -rf "$dest"
     fi
-done
+        fi
+    done
