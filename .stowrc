@@ -1,2 +1,2 @@
---ignore=\.DS_Store
---ignore=browser-homepage
+ignore=.DS_Store
+>>>>>>> 07c21a4 (Fixed stow usage.)

@@ -16,6 +16,13 @@
 
 ## Installation
 
+### Install dependencies
+
+```
+brew install bat eza fzf neovim starship stow zoxide
+brew install --cask ghostty
+```
+
 Clone the repo:
 
 ```bash
@@ -27,7 +34,7 @@ Use [stow](https://www.gnu.org/software/stow/) to create symlinks:
 ```bash
 # .../dotfiles
 
-stow *
+stow */
 ```
 
 Source packages:
